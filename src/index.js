@@ -12,17 +12,23 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'))
 })
 
-io.on('connection', (socket) => {
+const tech = io.of('/tech');
+
+tech.on('connection', (socket) => {
     console.log('user connected');
 
-    socket.on('message', (message) => {
-        console.log('client: ', message);
-        io.emit('message', message);
+    socket.on('join', (data) => {
+        socket.join(data.room);
+        tech.in(data.room).emit('message', `New user joined ${data.room} room`);
+    })
+
+    socket.on('message', (data) => {
+        console.log('client: ', data.message);
+        tech.in(data.room).emit('message', data.message);
     })
 
     socket.on('disconnect', () => {
         console.log('user disconnected');
-
-        io.emit('message', 'user disconnected')
+        tech.emit('message', 'user disconnected')
     })
 })
