@@ -14,6 +14,9 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
     console.log('user connected');
-    socket.emit('message', { trinity: 'Wake up, Neo' });
-    socket.on('answer', (data) => console.log('answer from client: ', data))
+
+    socket.on('message', (message) => {
+        console.log('client: ', message);
+        io.emit('message', message);
+    })
 })
