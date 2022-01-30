@@ -71,6 +71,10 @@
                 messageInput.value = '';
             })
 
+            socket.on('connect', () => {
+                socket.emit('message', 'user connected');
+            })
+
             socket.on('message', (message) => {
                 const messageElement = document.createElement('li');
                 messageElement.textContent = message;
