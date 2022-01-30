@@ -6,11 +6,23 @@ const PORT = 4000;
 
 server.listen(PORT || 3000, () => {
     console.log(`Server is listening on port ${PORT}`);
-})
+});
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'))
-})
+});
+
+app.get('/javascript', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/javascript.html'))
+});
+
+app.get('/react', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/react.html'))
+});
+
+app.get('/angular', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/angular.html'))
+});
 
 const tech = io.of('/tech');
 
